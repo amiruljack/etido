@@ -2,7 +2,6 @@ import 'package:etido/HomePage.dart';
 import 'package:etido/Services/TodosProvider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:get_storage/get_storage.dart';
 
 void main() {
   runApp(const MyApp());
@@ -10,10 +9,23 @@ void main() {
 
 final TodosProvider _todosProvider = TodosProvider();
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   const MyApp({super.key});
 
-  // This widget is the root of your application.
+  @override
+  State<StatefulWidget> createState() {
+    return MyAppState();
+  }
+}
+
+class MyAppState extends State<MyApp> {
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _todosProvider.initialize();
+  }
+
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
