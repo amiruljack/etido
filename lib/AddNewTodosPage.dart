@@ -1,0 +1,174 @@
+import 'package:etido/Models/RandomID.dart';
+import 'package:etido/Models/Todos.dart';
+import 'package:etido/Services/TodosProvider.dart';
+
+import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+import 'package:intl/intl.dart';
+
+String formatDateTime(DateTime dateTime) {
+  final formatter = DateFormat.yMd().add_j();
+  return formatter.format(dateTime);
+}
+
+class AddNewTodosPage extends StatefulWidget {
+  @override
+  State<StatefulWidget> createState() {
+    return AddNewTodosPageState();
+  }
+}
+
+class AddNewTodosPageState extends State<AddNewTodosPage> {
+  DateTime? startDate;
+  DateTime? endDate;
+  TextEditingController titleTextController = TextEditingController();
+
+  Future<DateTime?> _selectDate(BuildContext context) async {
+    return showDatePicker(
+      context: context,
+      initialDate: DateTime.now(),
+      firstDate: startDate != null ? startDate! : DateTime(1900),
+      lastDate: DateTime(2100),
+    );
+  }
+
+  bool isFormCompleted() {
+    return titleTextController.text.isNotEmpty && startDate != null && endDate != null;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text("Add new To-Do"),
+      ),
+      body: Padding(
+        padding: EdgeInsets.all(18),
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const SizedBox(
+                height: 20,
+              ),
+              const Padding(
+                padding: EdgeInsets.only(bottom: 18.0),
+                child: Text("To-Do Title"),
+              ),
+              TextFormField(
+                maxLines: null, // enables multiline input
+                decoration: const InputDecoration(
+                  border: OutlineInputBorder(),
+                  floatingLabelBehavior: FloatingLabelBehavior.always,
+                  hintText: "Please key in your to do title here",
+                ),
+                controller: titleTextController,
+                onChanged: (text) {
+                  setState(() {});
+                },
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              const Padding(
+                padding: EdgeInsets.only(bottom: 18.0),
+                child: Text("Start Date"),
+              ),
+              InkWell(
+                onTap: () {
+                  _selectDate(context).then((value) {
+                    if (value != null) {
+                      setState(() {
+                        startDate = value;
+                        if (startDate != null && endDate != null) {
+                          if (startDate!.millisecondsSinceEpoch > endDate!.millisecondsSinceEpoch) {
+                            startDate = null;
+                          }
+                        }
+                      });
+                    }
+                  });
+                },
+                child: InputDecorator(
+                  decoration: const InputDecoration(
+                    border: OutlineInputBorder(),
+                    suffixIcon: Icon(Icons.arrow_drop_down),
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: <Widget>[
+                      Text(startDate == null ? "Select a date" : formatDateTime(startDate!)),
+                    ],
+                  ),
+                ),
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              const Padding(
+                padding: EdgeInsets.only(bottom: 18.0),
+                child: Text("End Date"),
+              ),
+              InkWell(
+                onTap: () {
+                  _selectDate(context).then((value) {
+                    if (value != null) {
+                      setState(() {
+                        endDate = value;
+                      });
+                    }
+                  });
+                },
+                child: InputDecorator(
+                  decoration: const InputDecoration(
+                    border: OutlineInputBorder(),
+                    suffixIcon: Icon(Icons.arrow_drop_down),
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: <Widget>[
+                      Text(endDate == null ? "Select a date" : formatDateTime(endDate!)),
+                    ],
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+      bottomNavigationBar: Container(
+        color: Colors.white,
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: InkWell(
+            onTap: () {
+              Provider.of<TodosProvider>(context, listen: false).setTodo(TodoObject(
+                todoID: RandomID.generateRandomID(),
+                title: titleTextController.text,
+                startDate: startDate!.millisecondsSinceEpoch,
+                endDate: endDate!.millisecondsSinceEpoch,
+                todosStatus: TodosStatus.inProgress,
+              ));
+              Navigator.of(context).pop();
+            },
+            child: Container(
+              height: 60,
+              color: isFormCompleted() ? Colors.black : Colors.grey,
+              child: const Center(
+                child: Text(
+                  "Create Now",
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 24,
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
