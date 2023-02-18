@@ -42,7 +42,7 @@ class TodoObject {
       "todoID": todoID,
       "title": title,
       "startDate": startDate,
-      "endDate": title,
+      "endDate": endDate,
       "todosStatus": todosStatus.index,
     };
   }
