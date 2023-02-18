@@ -1,6 +1,7 @@
 import 'package:etido/Models/Todos.dart';
 import 'package:etido/Services/TodosProvider.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:provider/provider.dart';
 
 class TodoListTile extends StatelessWidget {
@@ -20,134 +21,150 @@ class TodoListTile extends StatelessWidget {
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(12.0),
         ),
-        child: Column(
-          children: [
-            ListTile(
-              title: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Text(
-                  todoObject.title,
-                  style: const TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
+        child: Slidable(
+          endActionPane: ActionPane(
+            motion: const ScrollMotion(),
+            children: [
+              SlidableAction(
+                onPressed: (context) {
+                  Provider.of<TodosProvider>(context, listen: false).removeTodo(todoObject.todoID);
+                },
+                backgroundColor: Color(0xFFFE4A49),
+                foregroundColor: Colors.white,
+                icon: Icons.delete,
+                label: 'Delete',
+              ),
+            ],
+          ),
+          child: Column(
+            children: [
+              ListTile(
+                title: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text(
+                    todoObject.title,
+                    style: const TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                 ),
-              ),
-              subtitle: Padding(
-                padding: const EdgeInsets.symmetric(vertical: 8.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    Expanded(
-                      flex: 1,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          const Padding(
-                            padding: EdgeInsets.all(5.0),
-                            child: Text("Start Date"),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.all(5.0),
-                            child: Text(
-                              todoObject.startDateString,
-                              style: dateTextStyle,
-                            ),
-                          )
-                        ],
-                      ),
-                    ),
-                    Expanded(
-                      flex: 1,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          const Padding(
-                            padding: EdgeInsets.all(5.0),
-                            child: Text("End Date"),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.all(5.0),
-                            child: Text(
-                              todoObject.endDateString,
-                              style: dateTextStyle,
-                            ),
-                          )
-                        ],
-                      ),
-                    ),
-                    Expanded(
-                      flex: 1,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          const Padding(
-                            padding: EdgeInsets.all(5.0),
-                            child: Text("Time Left"),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.all(5.0),
-                            child: Text(
-                              todoObject.timeLeftString,
-                              style: dateTextStyle,
-                            ),
-                          )
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-            Container(
-              height: 40,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.only(bottomLeft: Radius.circular(12.0), bottomRight: Radius.circular(12.0)),
-                color: Color(0xFFe7e3cf),
-              ),
-              child: Center(
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 18.0),
+                subtitle: Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 8.0),
                   child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      Row(
-                        children: [
-                          Text(
-                            "Status: ",
-                            style: TextStyle(color: Colors.grey),
-                          ),
-                          Text(
-                            todoObject.todosStatusString,
-                            style: TextStyle(fontWeight: FontWeight.w500),
-                          ),
-                        ],
+                      Expanded(
+                        flex: 1,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const Padding(
+                              padding: EdgeInsets.all(5.0),
+                              child: Text("Start Date"),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.all(5.0),
+                              child: Text(
+                                todoObject.startDateString,
+                                style: dateTextStyle,
+                              ),
+                            )
+                          ],
+                        ),
                       ),
-                      Row(
-                        children: [
-                          Text("Tick if completed"),
-                          CheckboxTheme(
-                            data: CheckboxThemeData(
-                              fillColor: MaterialStateProperty.all(Colors.white),
-                              checkColor: MaterialStateProperty.all(Colors.blue),
-                              overlayColor: MaterialStateProperty.all(Colors.white),
+                      Expanded(
+                        flex: 1,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const Padding(
+                              padding: EdgeInsets.all(5.0),
+                              child: Text("End Date"),
                             ),
-                            child: Checkbox(
-                              value: todoObject.todosStatus == TodosStatus.complete,
-                              onChanged: (newValue) {
-                                todoObject.todosStatus = (newValue ?? false) ? TodosStatus.complete : TodosStatus.inProgress;
-                                Provider.of<TodosProvider>(context, listen: false).setTodo(todoObject);
-                              },
+                            Padding(
+                              padding: const EdgeInsets.all(5.0),
+                              child: Text(
+                                todoObject.endDateString,
+                                style: dateTextStyle,
+                              ),
+                            )
+                          ],
+                        ),
+                      ),
+                      Expanded(
+                        flex: 1,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const Padding(
+                              padding: EdgeInsets.all(5.0),
+                              child: Text("Time Left"),
                             ),
-                          ),
-                        ],
+                            Padding(
+                              padding: const EdgeInsets.all(5.0),
+                              child: Text(
+                                todoObject.timeLeftString,
+                                style: dateTextStyle,
+                              ),
+                            )
+                          ],
+                        ),
                       ),
                     ],
                   ),
                 ),
               ),
-            )
-          ],
+              Container(
+                height: 40,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.only(bottomLeft: Radius.circular(12.0), bottomRight: Radius.circular(12.0)),
+                  color: Color(0xFFe7e3cf),
+                ),
+                child: Center(
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 18.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Row(
+                          children: [
+                            Text(
+                              "Status: ",
+                              style: TextStyle(color: Colors.grey),
+                            ),
+                            Text(
+                              todoObject.todosStatusString,
+                              style: TextStyle(fontWeight: FontWeight.w500),
+                            ),
+                          ],
+                        ),
+                        Row(
+                          children: [
+                            Text("Tick if completed"),
+                            CheckboxTheme(
+                              data: CheckboxThemeData(
+                                fillColor: MaterialStateProperty.all(Colors.white),
+                                checkColor: MaterialStateProperty.all(Colors.blue),
+                                overlayColor: MaterialStateProperty.all(Colors.white),
+                              ),
+                              child: Checkbox(
+                                value: todoObject.todosStatus == TodosStatus.complete,
+                                onChanged: (newValue) {
+                                  todoObject.todosStatus = (newValue ?? false) ? TodosStatus.complete : TodosStatus.inProgress;
+                                  Provider.of<TodosProvider>(context, listen: false).setTodo(todoObject);
+                                },
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              )
+            ],
+          ),
         ),
       ),
     );
