@@ -22,6 +22,7 @@ class TodosProvider extends ChangeNotifier {
 
   void removeTodo(String todoID) {
     _todoObjectMap.remove(todoID);
+    box.remove(todoID);
     notifyListeners();
   }
 
