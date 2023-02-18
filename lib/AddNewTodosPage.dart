@@ -5,13 +5,6 @@ import 'package:etido/Services/TodosProvider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import 'package:intl/intl.dart';
-
-String formatDateTime(DateTime dateTime) {
-  final formatter = DateFormat.yMd().add_j();
-  return formatter.format(dateTime);
-}
-
 class AddNewTodosPage extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
@@ -99,7 +92,7 @@ class AddNewTodosPageState extends State<AddNewTodosPage> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: <Widget>[
-                      Text(startDate == null ? "Select a date" : formatDateTime(startDate!)),
+                      Text(startDate == null ? "Select a date" : TodoObject.formatDateTime(startDate!)),
                     ],
                   ),
                 ),
@@ -129,7 +122,7 @@ class AddNewTodosPageState extends State<AddNewTodosPage> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: <Widget>[
-                      Text(endDate == null ? "Select a date" : formatDateTime(endDate!)),
+                      Text(endDate == null ? "Select a date" : TodoObject.formatDateTime(endDate!)),
                     ],
                   ),
                 ),

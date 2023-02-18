@@ -1,10 +1,13 @@
 import 'package:etido/AddNewTodosPage.dart';
 import 'package:etido/Models/Todos.dart';
 import 'package:etido/Services/TodosProvider.dart';
+import 'package:etido/TodoListTile.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class MyHomePage extends StatelessWidget {
+  ScrollController _scrollController = ScrollController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -14,13 +17,21 @@ class MyHomePage extends StatelessWidget {
         title: const Text("To-Do-List"),
       ),
       body: Consumer<TodosProvider>(
-        builder: (context, provider, child) =>
+        builder: (context, provider, child) => ListView(
+          controller: _scrollController,
+          children: [
             ListView.builder(
+                controller: _scrollController,
+                shrinkWrap: true,
                 itemCount: provider.getTodos.length,
                 itemBuilder: (context, index) => ListTile(
-                      title: Text(provider.getTodos[index].title),
-                    )) ??
-            Container(),
+                      title: TodoListTile(todoObject: provider.getTodos[index]),
+                    )),
+            SizedBox(
+              height: 200,
+            ),
+          ],
+        ),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: FloatingActionButton(
