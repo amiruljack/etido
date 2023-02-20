@@ -5,14 +5,18 @@ import 'package:etido/Services/TodosProvider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class AddNewTodosPage extends StatefulWidget {
+class TodosEditorPage extends StatefulWidget {
+  final TodoObject? todoObject;
+
+  const TodosEditorPage({super.key, required this.todoObject});
+
   @override
   State<StatefulWidget> createState() {
-    return AddNewTodosPageState();
+    return TodosEditorPageState();
   }
 }
 
-class AddNewTodosPageState extends State<AddNewTodosPage> {
+class TodosEditorPageState extends State<TodosEditorPage> {
   DateTime? startDate;
   DateTime? endDate;
   TextEditingController titleTextController = TextEditingController();
@@ -28,6 +32,17 @@ class AddNewTodosPageState extends State<AddNewTodosPage> {
 
   bool isFormCompleted() {
     return titleTextController.text.isNotEmpty && startDate != null && endDate != null;
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    TodoObject? todoObject = widget.todoObject;
+    if (todoObject != null) {
+      titleTextController.text = todoObject.title;
+      startDate = DateTime.fromMillisecondsSinceEpoch(todoObject.startDate);
+      endDate = DateTime.fromMillisecondsSinceEpoch(todoObject.endDate);
+    }
   }
 
   @override
@@ -138,7 +153,7 @@ class AddNewTodosPageState extends State<AddNewTodosPage> {
           child: InkWell(
             onTap: () {
               Provider.of<TodosProvider>(context, listen: false).setTodo(TodoObject(
-                todoID: RandomID.generateRandomID(),
+                todoID: widget.todoObject?.todoID ?? RandomID.generateRandomID(),
                 title: titleTextController.text,
                 startDate: startDate!.millisecondsSinceEpoch,
                 endDate: endDate!.millisecondsSinceEpoch,

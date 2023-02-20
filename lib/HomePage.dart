@@ -1,4 +1,4 @@
-import 'package:etido/AddNewTodosPage.dart';
+import 'package:etido/TodosEditorPage.dart';
 import 'package:etido/Models/Todos.dart';
 import 'package:etido/Services/TodosProvider.dart';
 import 'package:etido/TodoListTile.dart';
@@ -36,7 +36,7 @@ class MyHomePage extends StatelessWidget {
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          Navigator.of(context).push(MaterialPageRoute(builder: (context) => AddNewTodosPage()));
+          Navigator.of(context).push(MaterialPageRoute(builder: (context) => TodosEditorPage()));
         },
         tooltip: 'Increment',
         child: const Icon(Icons.add),
