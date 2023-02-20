@@ -1,9 +1,13 @@
+import 'package:etido/EtidoAnalyticsService.dart';
 import 'package:etido/HomePage.dart';
 import 'package:etido/Services/TodosProvider.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   runApp(const MyApp());
 }
 
@@ -24,6 +28,7 @@ class MyAppState extends State<MyApp> {
     // TODO: implement initState
     super.initState();
     _todosProvider.initialize();
+    EtidoAnalyticsService.logEvent(etidoEvent: EtidoEvents.openApp, parameters: {});
   }
 
   @override

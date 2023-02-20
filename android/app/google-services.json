@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "54810413076",
+    "project_id": "etitodo-app",
+    "storage_bucket": "etitodo-app.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:54810413076:android:449428d3904c8ab6e2bf01",
+        "android_client_info": {
+          "package_name": "com.etika.etido.etido"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "54810413076-jp0l2sll7uk85ebfui6lkr7aehh9qakq.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDh7rSukH3q1rY9Lx8fHUgiPLTf02QUzwk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "54810413076-jp0l2sll7uk85ebfui6lkr7aehh9qakq.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,3 +1,4 @@
+import 'package:etido/EtidoAnalyticsService.dart';
 import 'package:etido/Models/RandomID.dart';
 import 'package:etido/Models/Todos.dart';
 import 'package:etido/Services/TodosProvider.dart';
@@ -38,9 +39,12 @@ class TodosEditorPageState extends State<TodosEditorPage> {
     super.initState();
     TodoObject? todoObject = widget.todoObject;
     if (todoObject != null) {
+      EtidoAnalyticsService.logEvent(etidoEvent: EtidoEvents.pageLoad, parameters: {"pageName": "TodosEditorPage", "todoPageLoadType": "Edit todo"});
       titleTextController.text = todoObject.title;
       startDate = DateTime.fromMillisecondsSinceEpoch(todoObject.startDate);
       endDate = DateTime.fromMillisecondsSinceEpoch(todoObject.endDate);
+    } else {
+      EtidoAnalyticsService.logEvent(etidoEvent: EtidoEvents.pageLoad, parameters: {"pageName": "TodosEditorPage", "todoPageLoadType": "New todo"});
     }
   }
 
@@ -85,6 +89,7 @@ class TodosEditorPageState extends State<TodosEditorPage> {
               ),
               InkWell(
                 onTap: () {
+                  EtidoAnalyticsService.logEvent(etidoEvent: EtidoEvents.buttonClick, parameters: {"buttonName": "Select start date"});
                   _selectDate(context).then((value) {
                     if (value != null) {
                       setState(() {
@@ -120,6 +125,7 @@ class TodosEditorPageState extends State<TodosEditorPage> {
               ),
               InkWell(
                 onTap: () {
+                  EtidoAnalyticsService.logEvent(etidoEvent: EtidoEvents.buttonClick, parameters: {"buttonName": "Select end date"});
                   _selectDate(context).then((value) {
                     if (value != null) {
                       setState(() {
@@ -151,6 +157,7 @@ class TodosEditorPageState extends State<TodosEditorPage> {
           padding: const EdgeInsets.all(8.0),
           child: InkWell(
             onTap: () {
+              EtidoAnalyticsService.logEvent(etidoEvent: EtidoEvents.buttonClick, parameters: {"buttonName": "Save todo"});
               Provider.of<TodosProvider>(context, listen: false).setTodo(TodoObject(
                 todoID: widget.todoObject?.todoID ?? RandomID.generateRandomID(),
                 title: titleTextController.text,

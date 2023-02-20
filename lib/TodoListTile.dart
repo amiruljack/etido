@@ -1,3 +1,4 @@
+import 'package:etido/EtidoAnalyticsService.dart';
 import 'package:etido/Models/Todos.dart';
 import 'package:etido/Services/TodosProvider.dart';
 import 'package:etido/TodosEditorPage.dart';
@@ -41,6 +42,7 @@ class TodoListTile extends StatelessWidget {
             children: [
               ListTile(
                 onTap: () {
+                  EtidoAnalyticsService.logEvent(etidoEvent: EtidoEvents.buttonClick, parameters: {"buttonName": "TodoListTile"});
                   Navigator.of(context).push(MaterialPageRoute(
                       builder: (context) => TodosEditorPage(
                             todoObject: todoObject,
