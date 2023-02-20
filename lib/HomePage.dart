@@ -1,7 +1,6 @@
-import 'package:etido/TodosEditorPage.dart';
-import 'package:etido/Models/Todos.dart';
 import 'package:etido/Services/TodosProvider.dart';
 import 'package:etido/TodoListTile.dart';
+import 'package:etido/TodosEditorPage.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
