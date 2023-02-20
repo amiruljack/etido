@@ -170,10 +170,10 @@ class TodosEditorPageState extends State<TodosEditorPage> {
             child: Container(
               height: 60,
               color: isFormCompleted() ? Colors.black : Colors.grey,
-              child: const Center(
+              child: Center(
                 child: Text(
-                  "Create Now",
-                  style: TextStyle(
+                  widget.todoObject == null ? "Create Now" : "Save",
+                  style: const TextStyle(
                     color: Colors.white,
                     fontSize: 24,
                   ),
