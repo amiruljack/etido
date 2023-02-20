@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class MyHomePage extends StatelessWidget {
-  ScrollController _scrollController = ScrollController();
+  final ScrollController _scrollController = ScrollController();
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +27,7 @@ class MyHomePage extends StatelessWidget {
                 itemBuilder: (context, index) => ListTile(
                       title: TodoListTile(todoObject: provider.getTodos[index]),
                     )),
-            SizedBox(
+            const SizedBox(
               height: 200,
             ),
           ],
@@ -36,7 +36,10 @@ class MyHomePage extends StatelessWidget {
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          Navigator.of(context).push(MaterialPageRoute(builder: (context) => TodosEditorPage()));
+          Navigator.of(context).push(MaterialPageRoute(
+              builder: (context) => const TodosEditorPage(
+                    todoObject: null,
+                  )));
         },
         tooltip: 'Increment',
         child: const Icon(Icons.add),

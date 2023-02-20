@@ -1,5 +1,6 @@
 import 'package:etido/Models/Todos.dart';
 import 'package:etido/Services/TodosProvider.dart';
+import 'package:etido/TodosEditorPage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:provider/provider.dart';
@@ -39,6 +40,12 @@ class TodoListTile extends StatelessWidget {
           child: Column(
             children: [
               ListTile(
+                onTap: () {
+                  Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => TodosEditorPage(
+                            todoObject: todoObject,
+                          )));
+                },
                 title: Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Text(
