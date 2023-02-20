@@ -160,6 +160,11 @@ class TodoListTile extends StatelessWidget {
                               child: Checkbox(
                                 value: todoObject.todosStatus == TodosStatus.complete,
                                 onChanged: (newValue) {
+                                  if (newValue == true) {
+                                    EtidoAnalyticsService.logEvent(etidoEvent: EtidoEvents.changeStatusToComplete, parameters: todoObject.toMap());
+                                  } else {
+                                    EtidoAnalyticsService.logEvent(etidoEvent: EtidoEvents.changeStatusToInProgress, parameters: todoObject.toMap());
+                                  }
                                   todoObject.todosStatus = (newValue ?? false) ? TodosStatus.complete : TodosStatus.inProgress;
                                   Provider.of<TodosProvider>(context, listen: false).setTodo(todoObject);
                                 },
