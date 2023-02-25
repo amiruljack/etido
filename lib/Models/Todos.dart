@@ -1,8 +1,8 @@
 import 'package:intl/intl.dart';
 
 enum TodosStatus {
-  inProgress,
-  complete,
+  inProgress, // represents the task is in progress
+  complete, // represents the task is complete
 }
 
 class TodoObject {
