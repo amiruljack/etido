@@ -1,4 +1,4 @@
-import 'package:etido/EtidoAnalyticsService.dart';
+import 'package:etido/Services/EtidoAnalyticsService.dart';
 import 'package:etido/HomePage.dart';
 import 'package:etido/Services/TodosProvider.dart';
 import 'package:firebase_core/firebase_core.dart';

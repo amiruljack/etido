@@ -1,4 +1,4 @@
-import 'package:etido/EtidoAnalyticsService.dart';
+import 'package:etido/Services/EtidoAnalyticsService.dart';
 import 'package:etido/Models/Todos.dart';
 import 'package:etido/Services/TodosProvider.dart';
 import 'package:etido/TodosEditorPage.dart';
