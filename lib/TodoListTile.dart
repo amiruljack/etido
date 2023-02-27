@@ -1,11 +1,14 @@
-import 'package:etido/Services/EtidoAnalyticsService.dart';
 import 'package:etido/Models/Todos.dart';
+import 'package:etido/Services/EtidoAnalyticsService.dart';
 import 'package:etido/Services/TodosProvider.dart';
 import 'package:etido/TodosEditorPage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:provider/provider.dart';
 
+/// A widget that displays a to do object in a tile format. The tile displays
+/// the to do's title, start date, end date, time left, status and a checkbox
+/// to mark the to do as complete.
 class TodoListTile extends StatelessWidget {
   final TodoObject todoObject;
 
