@@ -1,10 +1,11 @@
-import 'package:etido/Services/EtidoAnalyticsService.dart';
 import 'package:etido/Models/RandomID.dart';
 import 'package:etido/Models/Todos.dart';
+import 'package:etido/Services/EtidoAnalyticsService.dart';
 import 'package:etido/Services/TodosProvider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+/// A form widget to add or edit a to-do item.
 class TodosEditorPage extends StatefulWidget {
   final TodoObject? todoObject;
 
@@ -16,11 +17,13 @@ class TodosEditorPage extends StatefulWidget {
   }
 }
 
+/// The [State] object for the [TodosEditorPage] widget.
 class TodosEditorPageState extends State<TodosEditorPage> {
   DateTime? startDate;
   DateTime? endDate;
   TextEditingController titleTextController = TextEditingController();
 
+  /// Shows the date picker dialog and returns the selected date.
   Future<DateTime?> _selectDate(BuildContext context) async {
     return showDatePicker(
       context: context,
@@ -30,6 +33,7 @@ class TodosEditorPageState extends State<TodosEditorPage> {
     );
   }
 
+  /// Checks if the form is completed or not.
   bool isFormCompleted() {
     return titleTextController.text.isNotEmpty && startDate != null && endDate != null;
   }
