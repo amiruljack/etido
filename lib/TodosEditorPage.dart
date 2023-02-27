@@ -7,9 +7,7 @@ import 'package:provider/provider.dart';
 
 /// A form widget to add or edit a to-do item.
 class TodosEditorPage extends StatefulWidget {
-  final TodoObject? todoObject;
-
-  const TodosEditorPage({super.key, required this.todoObject});
+  const TodosEditorPage({super.key});
 
   @override
   State<StatefulWidget> createState() {
@@ -41,19 +39,25 @@ class TodosEditorPageState extends State<TodosEditorPage> {
   @override
   void initState() {
     super.initState();
-    TodoObject? todoObject = widget.todoObject;
-    if (todoObject != null) {
-      EtidoAnalyticsService.logEvent(etidoEvent: EtidoEvents.pageLoad, parameters: {"pageName": "TodosEditorPage", "todoPageLoadType": "Edit todo"});
-      titleTextController.text = todoObject.title;
-      startDate = DateTime.fromMillisecondsSinceEpoch(todoObject.startDate);
-      endDate = DateTime.fromMillisecondsSinceEpoch(todoObject.endDate);
-    } else {
-      EtidoAnalyticsService.logEvent(etidoEvent: EtidoEvents.pageLoad, parameters: {"pageName": "TodosEditorPage", "todoPageLoadType": "New todo"});
-    }
+    Future.delayed(Duration.zero, () {
+      setState(() {
+        TodoObject? todoObject = ModalRoute.of(context)!.settings.arguments as TodoObject?;
+        if (todoObject != null) {
+          EtidoAnalyticsService.logEvent(etidoEvent: EtidoEvents.pageLoad, parameters: {"pageName": "TodosEditorPage", "todoPageLoadType": "Edit todo"});
+          titleTextController.text = todoObject.title;
+          startDate = DateTime.fromMillisecondsSinceEpoch(todoObject.startDate);
+          endDate = DateTime.fromMillisecondsSinceEpoch(todoObject.endDate);
+        } else {
+          EtidoAnalyticsService.logEvent(etidoEvent: EtidoEvents.pageLoad, parameters: {"pageName": "TodosEditorPage", "todoPageLoadType": "New todo"});
+        }
+      });
+    });
   }
 
   @override
   Widget build(BuildContext context) {
+    TodoObject? todoObject = ModalRoute.of(context)?.settings.arguments as TodoObject?;
+
     return Scaffold(
       appBar: AppBar(
         title: const Text("Add new To-Do"),
@@ -163,7 +167,7 @@ class TodosEditorPageState extends State<TodosEditorPage> {
             onTap: () {
               EtidoAnalyticsService.logEvent(etidoEvent: EtidoEvents.buttonClick, parameters: {"buttonName": "Save todo"});
               Provider.of<TodosProvider>(context, listen: false).setTodo(TodoObject(
-                todoID: widget.todoObject?.todoID ?? RandomID.generateRandomID(),
+                todoID: todoObject?.todoID ?? RandomID.generateRandomID(),
                 title: titleTextController.text,
                 startDate: startDate!.millisecondsSinceEpoch,
                 endDate: endDate!.millisecondsSinceEpoch,
@@ -176,7 +180,7 @@ class TodosEditorPageState extends State<TodosEditorPage> {
               color: isFormCompleted() ? Colors.black : Colors.grey,
               child: Center(
                 child: Text(
-                  widget.todoObject == null ? "Create Now" : "Save",
+                  todoObject == null ? "Create Now" : "Save",
                   style: const TextStyle(
                     color: Colors.white,
                     fontSize: 24,

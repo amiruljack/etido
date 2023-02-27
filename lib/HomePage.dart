@@ -1,6 +1,6 @@
+import 'package:etido/Routes.dart';
 import 'package:etido/Services/TodosProvider.dart';
 import 'package:etido/TodoListTile.dart';
-import 'package:etido/TodosEditorPage.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -35,10 +35,7 @@ class MyHomePage extends StatelessWidget {
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          Navigator.of(context).push(MaterialPageRoute(
-              builder: (context) => const TodosEditorPage(
-                    todoObject: null,
-                  )));
+          Navigator.of(context).pushNamed(Routes.editor);
         },
         tooltip: 'Increment',
         child: const Icon(Icons.add),

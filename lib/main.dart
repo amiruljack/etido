@@ -1,6 +1,8 @@
-import 'package:etido/Services/EtidoAnalyticsService.dart';
 import 'package:etido/HomePage.dart';
+import 'package:etido/Routes.dart';
+import 'package:etido/Services/EtidoAnalyticsService.dart';
 import 'package:etido/Services/TodosProvider.dart';
+import 'package:etido/TodosEditorPage.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -44,7 +46,11 @@ class MyAppState extends State<MyApp> {
             appBarTheme: const AppBarTheme(backgroundColor: Colors.amber, titleTextStyle: TextStyle(color: Colors.black, fontSize: 20)),
             floatingActionButtonTheme: const FloatingActionButtonThemeData(backgroundColor: Colors.redAccent),
           ),
-          home: MyHomePage(),
+          initialRoute: Routes.home,
+          routes: {
+            Routes.home: (context) => MyHomePage(),
+            Routes.editor: (context) => const TodosEditorPage(),
+          },
         ));
   }
 }

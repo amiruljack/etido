@@ -1,7 +1,7 @@
 import 'package:etido/Models/Todos.dart';
+import 'package:etido/Routes.dart';
 import 'package:etido/Services/EtidoAnalyticsService.dart';
 import 'package:etido/Services/TodosProvider.dart';
-import 'package:etido/TodosEditorPage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:provider/provider.dart';
@@ -46,10 +46,7 @@ class TodoListTile extends StatelessWidget {
               ListTile(
                 onTap: () {
                   EtidoAnalyticsService.logEvent(etidoEvent: EtidoEvents.buttonClick, parameters: {"buttonName": "TodoListTile"});
-                  Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => TodosEditorPage(
-                            todoObject: todoObject,
-                          )));
+                  Navigator.of(context).pushNamed(Routes.editor, arguments: todoObject);
                 },
                 title: Padding(
                   padding: const EdgeInsets.all(8.0),
